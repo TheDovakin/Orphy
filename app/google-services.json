@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "232822367180",
+    "project_id": "orphy-p2-2025",
+    "storage_bucket": "orphy-p2-2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232822367180:android:d5f4ac5adf93df1000f369",
+        "android_client_info": {
+          "package_name": "com.fullbust.orphy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpGWDmEDSSElhMjg2JTbbZVS2XOqvs-mQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
