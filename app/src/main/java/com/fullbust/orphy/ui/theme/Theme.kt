@@ -12,15 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = background_beige,
+    secondary = background_text_brown,
+    tertiary = chat_text_grey
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = background_yellow,
+    secondary = user_bubble_color,
+    tertiary = other_bubble_color
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
