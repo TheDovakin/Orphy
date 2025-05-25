@@ -92,6 +92,7 @@ fun Banniere(){
     }
 }
 
+
 @Composable
 fun exitpopup(onClose: () -> Unit){
     Box(

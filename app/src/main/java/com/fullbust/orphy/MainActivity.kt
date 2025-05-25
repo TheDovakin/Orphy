@@ -56,6 +56,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 data class Message(val author: String, val body: String)
 data class User(val pdp: Painter, val username : String)
 
