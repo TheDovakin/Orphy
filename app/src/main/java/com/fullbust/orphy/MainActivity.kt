@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.* // size, row, column, padding, width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.* // text, button , surface, scaffold, materialTheme
 import androidx.compose.runtime.* // remember, mutableStateOf, by, setValue
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import com.fullbust.orphy.ui.theme.*
 import com.fullbust.orphy.Banniere
+import androidx.compose.ui.graphics.painter.Painter
 
 
 class MainActivity : ComponentActivity() {
@@ -46,6 +48,7 @@ class MainActivity : ComponentActivity() {
                         color = background_beige
                     ) {
                         Banniere()
+                        Chatbarre()
                     }
                 }
             }
@@ -54,6 +57,7 @@ class MainActivity : ComponentActivity() {
 }
 
 data class Message(val author: String, val body: String)
+data class User(val pdp: Painter, val username : String)
 
 @Composable
 fun MessageCard(msg: Message) {
@@ -97,61 +101,49 @@ fun MessageCard(msg: Message) {
 }
 
 @Composable
-fun Conversation(messages: List<Message>) {
-    LazyColumn {
-        items(messages) { message ->
-            MessageCard(message)
+fun Chatbarre(){
+    val messages = remember { mutableStateListOf<Message>() }
+    var currentMessage by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(8.dp)
+    ) {
+        // Liste des messages
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            reverseLayout = true // les nouveaux messages en bas
+        ) {
+            items(messages.reversed()) { Message ->
+                MessageCard(msg = Message)
+            }
         }
-    }
-}
-
-@Composable
-fun InputExample() {
-    var currentInput by remember { mutableStateOf("") }
-    val itemList = remember { mutableStateListOf<String>() }
-    var mess ="";
-
-    Column(modifier = Modifier.padding(16.dp)) {
-        TextField(
-            value = currentInput,
-            onValueChange = { currentInput = it },
-            label = { Text("Entrez un élément") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    if (currentInput.isNotBlank()) {
-                        mess=currentInput;
-                        currentInput = ""  // Réinitialise le champ
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextField(
+                value = currentMessage,
+                onValueChange = { currentMessage = it },
+                modifier = Modifier.weight(1f),
+                placeholder = { Text("Écrire un message...") }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(
+                onClick = {
+                    if (currentMessage.isNotBlank()) {
+                        messages.add(Message(author = "Lexi", body = currentMessage))
+                        currentMessage = ""
                     }
                 }
-            )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text("Liste des éléments :", style = MaterialTheme.typography.titleMedium)
-        itemList.forEach { item ->
-            Text("• $item")
-        }
-    }
-}
-
-val SomaMessages = listOf(
-    Message("Soma", "Salut ! Tu es dispo pour discuter ?"),
-    Message("Soma", "Je voulais te montrer quelque chose. Quelque chose de pitoyable"),
-    Message("Soma", "Regarde ce que j’ai trouvé hier ! Tes notes de DE HAHA"),
-    Message("Soma", "On pourrait peut-être s'en inspirer. Si on veux rater son année et finir avec des dettes colosales"),
-    Message("Soma", "Dis-moi ce que tu en penses 😊")
-)
-
-@Preview
-@Composable
-fun PreviewConversation() {
-    OrphyTheme {
-        Conversation(SomaMessages)
-        InputExample()
-    }
+            ) {
+                Text("Envoyer")
+            }
+        }}
 }
 
 @Preview(name = "Dark Mode")
